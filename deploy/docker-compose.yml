@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  ddshopdb:
+    container_name: ddshopdb
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: dangerous
+      MYSQL_DATABASE: ddshop # for database creation automatically
+
+    # 端口映射
+    ports:
+      - 3306:3306
+    # 数据挂载
+    volumes:
+      # - "./data:/var/lib/mysql"
+      - "/tmp/mysql/data:/var/lib/mysql"

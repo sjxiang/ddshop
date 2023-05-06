@@ -1,0 +1,81 @@
+
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option go_package = ".;pb";
+
+package user;
+
+
+service User {
+    rpc GetUserList (GetUserListRequest) returns (GetUserListReply);  // 用户列表
+    rpc GetUserByEmail (GetUserByEmailRequest) returns (UserInfo);    // 通过 mobile 查询用户
+    rpc GetUserById (GetUserByIdRequest) returns (UserInfo);          // 通过 id 查询用户
+    rpc CreateUser (CreateUserRequest) returns (UserInfo);            // 添加用户
+    rpc UpdateUser (UpdateUserRequest) returns (google.protobuf.Empty);  // 更新用户
+    rpc VerifyPassword (VerifyPasswordRequest) returns (VerifyPasswordReply);  // 校验密码                              // 校验密码
+}
+
+
+message GetUserListRequest {
+    
+    message Pagination {
+        uint32 pageNum = 1;
+        uint32 pageSize = 2;
+    }
+
+    Pagination page_info = 1;
+}
+
+
+message GetUserListReply {
+    int64 total = 1;
+    repeated UserInfo data = 2;
+}
+
+message UserInfo {
+    int32 id = 1;
+    string password = 2;
+    string mobile = 3;
+    string email = 4;
+    string nickname = 5;
+    uint64 birthday = 6;
+    string avatar = 7;
+    int32 role = 8;
+}
+
+message GetUserByEmailRequest {
+    string email = 1;
+}
+
+message GetUserByIdRequest {
+    int32 id = 1;
+}
+
+message CreateUserRequest {
+    string mobile = 1;
+    string email = 2;
+    string nickname = 3;
+    uint64 password = 4;
+}
+
+message UpdateUserRequest {
+    int32 id = 1;
+    optional string mobile = 2;
+    optional string email = 3;
+    optional string nickname = 4;
+    optional int64 password = 5;
+    optional int64 birthday = 6;  // 时间戳
+    optional string avatar = 7;
+}
+
+
+message VerifyPasswordRequest {
+    string plainText = 1;
+    string password_hash = 2;
+}
+
+message VerifyPasswordReply {
+    bool success = 1;
+}
