@@ -3,7 +3,7 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 
-option go_package = ".;pb";
+option go_package = ".;pb";  // 当前目录下
 
 package user;
 

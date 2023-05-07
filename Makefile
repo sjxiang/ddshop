@@ -14,3 +14,4 @@ api:
  	       --go_out=paths=source_relative:./user_srv/pb \
  	       --go-grpc_out=paths=source_relative:./user_srv/pb \
 	       user.proto
+
