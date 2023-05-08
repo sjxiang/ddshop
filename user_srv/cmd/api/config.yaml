@@ -3,3 +3,8 @@ app:
   host: "127.0.0.1"
   port: 8000
  
+jwt:
+  secret_key: "cbskcnbcvoq"
+
+redis:
+  addr: "172.20.0.1:6379"

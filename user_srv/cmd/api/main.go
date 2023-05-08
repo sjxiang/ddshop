@@ -5,13 +5,15 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/sjxiang/ddshop/user_srv/cmd/api/conf"
-	"github.com/sjxiang/ddshop/user_srv/cmd/api/log"
+	"github.com/sjxiang/ddshop/user_srv/cmd/api/pkg/cache"
+	"github.com/sjxiang/ddshop/user_srv/cmd/api/pkg/conf"
+	"github.com/sjxiang/ddshop/user_srv/cmd/api/pkg/log"
 )
 
 func Init() {
 	log.Init()
 	conf.LoadConfig()
+	cache.ConnectToRedis(conf.Conf.Redis.Addr, "", 0)
 }
 
 func main() {

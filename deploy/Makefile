@@ -39,3 +39,10 @@ container_net:
 	@printf '$(OK_COLOR)查看 MySQL 容器 IP 地址 .. 🚀$(NO_COLOR)\n'
 	@docker inspect ddshopdb | grep IPAddress
 	@echo ''
+
+login_redis:
+	@echo ''
+	@printf '$(OK_COLOR)登录 Redis 容器 .. 🚀$(NO_COLOR)\n'
+	@docker-compose -f ./docker-compose.yml exec cache sh -c 'redis-cli'
+	@printf '$(OK_COLOR)退出 .. 🎯$(NO_COLOR)\n'
+	@ech

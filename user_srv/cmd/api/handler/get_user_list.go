@@ -8,52 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 
 	"github.com/sjxiang/ddshop/user_srv/pb"
 )
-
-func HandleGrpcErrorToHTTP(err error, ctx *gin.Context)  {
-	// 将 gRPC 的 code 转换成 http 的状态码
-
-	if err != nil {
-		if e, ok := status.FromError(err); ok {
-			switch e.Code() {
-			case codes.NotFound:
-				ctx.JSON(http.StatusNotFound, gin.H{
-					"msg": e.Message(),
-				})
-			case codes.Internal:
-				ctx.JSON(http.StatusInternalServerError, gin.H{
-					"msg": "内部错误",
-				})
-			case codes.InvalidArgument:
-				ctx.JSON(http.StatusBadRequest, gin.H{
-					"msg": "参数错误",
-				})
-			case codes.Unavailable:
-				ctx.JSON(http.StatusInternalServerError, gin.H{
-					"msg": "用户服务不可用",
-				})
-			default:
-				ctx.JSON(http.StatusInternalServerError, gin.H{
-					"msg": e.Code(),
-				})
-			}
-
-			return
-		}
-	}
-}
 
 
 func GetUserList(ctx *gin.Context) {
 
 	// 取出 Get 中的参数
-	pageNum := ctx.Query("pageNum")
-	pageSize := ctx.Query("pageSize")
-
+	pageNum := ctx.DefaultQuery("pageNum", "0")
+	pageSize := ctx.DefaultQuery("pageSize", "0")
 	num, err := strconv.Atoi(pageNum)
 	size, err := strconv.Atoi(pageSize)
 	
@@ -92,8 +56,5 @@ func GetUserList(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, data)
-
-	zap.S().Debug("获取用户列表页")
-
 
 } 

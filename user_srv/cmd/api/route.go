@@ -28,13 +28,17 @@ func registerApiRoutes(router *gin.Engine) {
 
 	v1 := r.Group("/v1")
 
+	// 验证码服务
+	v1.GET("/verify", handler.ShowVerifyCode)
+
 	// 用户服务
 	user := v1.Group("/user")
 	user.Use()
 
 	{
-		user.GET("/list", handler.GetUserList)	
-		user.PUT("/:user_id", nil)		
+		user.POST("/login", handler.PasswordLogin)	
+		user.POST("/register", handler.Register)
+		user.GET("/list", handler.JWTAuth, handler.GetUserList)		
 	}
 	
 
