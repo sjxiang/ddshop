@@ -1,10 +1,13 @@
 
 app:
-  host: "127.0.0.1"
-  port: 8000
+  addr: "127.0.0.1:8000"
  
 jwt:
   secret_key: "cbskcnbcvoq"
 
 redis:
-  addr: "172.20.0.1:6379"
+  addr: "172.25.0.1:6379"
+
+
+consul:
+  addr: "172.25.0.1:8500"

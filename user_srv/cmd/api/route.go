@@ -28,6 +28,14 @@ func registerApiRoutes(router *gin.Engine) {
 
 	v1 := r.Group("/v1")
 
+	// 健康检查
+	v1.GET("/health", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": http.StatusOK,
+			"success": true,
+		})
+	})
+
 	// 验证码服务
 	v1.GET("/verify", handler.ShowVerifyCode)
 

@@ -24,3 +24,11 @@ services:
     volumes:
       - /tmp/redis/data:/data
     command: redis-server --appendonly yes 
+
+
+  consul:
+    container_name: consul
+    image: consul:latest
+    ports:
+      - 8500:8500  # web
+    command: ["consul","agent","-server","-bootstrap","-data-dir","/consul","-ui","-bind","127.0.0.1","-client","0.0.0.0"]

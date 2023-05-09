@@ -1,10 +1,22 @@
 package service
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"time"
 
+	"golang.org/x/crypto/bcrypt"
+)
 
+// 获取页码信息
 func GetPageOffset(pageNum, pageSize uint32) int {
+	if pageNum < 1 {
+		pageNum = 1
+	}
 	return int((pageNum - 1) * pageSize)
+}
+
+// 格式化时间
+func DateFormat(times int64) string {
+	return time.Unix(times, 0).Format("2006-01-02")
 }
 
 

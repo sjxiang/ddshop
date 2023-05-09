@@ -29,15 +29,15 @@ var Conf = new(Config)
  */
 
 type Config struct {
-	App   App   `mapstructure:"app"`
-	JWT   JWT   `mapstructure:"jwt"`
-	Redis Redis `mapstructure:"redis"`
+	App    App    `mapstructure:"app"`
+	JWT    JWT    `mapstructure:"jwt"`
+	Redis  Redis  `mapstructure:"redis"`
+	Consul Consul `mapstructure:"consul"`
 	// 嵌套
 }
 
 type App struct {
-	Host  string `mapstructure:"host"`
-	Port  int    `mapstructure:"port"`
+	Addr string `mapstructure:"addr"`
 }
 
 type JWT struct {
@@ -47,6 +47,11 @@ type JWT struct {
 type Redis struct {
 	Addr string `mapstructure:"addr"`
 }
+
+type Consul struct {
+	Addr      string `mapstructure:"addr"`
+}
+
 
 // 加载配置，失败直接 panic
 func LoadConfig() {
