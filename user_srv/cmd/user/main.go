@@ -7,6 +7,8 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	"google.golang.org/grpc/health/grpc_health_v1"
 
 	"github.com/sjxiang/ddshop/user_srv/cmd/user/conf"
 	"github.com/sjxiang/ddshop/user_srv/cmd/user/dal"
@@ -40,6 +42,9 @@ func main() {
 
 	log.Printf("server listening at %v\n", listener.Addr())
 	
+	// 注册服务健康检查
+	grpc_health_v1.RegisterHealthServer(server, health.NewServer())
+
 	// 启动服务
 	if err = server.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %s", err.Error())
