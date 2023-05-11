@@ -6,7 +6,7 @@ import "google/protobuf/empty.proto";
 option go_package = ".;pb";  // 当前目录下
 
 package goods;
-xs
+
 service GoodsService {
     rpc GetAllCategoryList (google.protobuf.Empty) returns (CategoryListResponse) {}
 }
