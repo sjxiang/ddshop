@@ -1,0 +1,53 @@
+services:
+
+  # cerebro:
+  #     image: lmenezes/cerebro:0.8.3
+  #     container_name: cerebro
+  #     ports:
+  #       - "9000:9000"
+  #     command:
+  #       - -Dhosts.0.host=http://es-simple:9200
+  #     networks:
+  #       - mynetwork
+
+  kibana:
+    image: kibana:7.10.1
+    container_name: kibana-simple
+    environment:
+      - TIMELION_ENABLED=true
+      - I18N_LOCALE=zh-CN
+    ports:
+      - "5601:5601"
+    networks:
+      - mynetwork
+      
+  elasticsearch:
+    image: elasticsearch:7.10.1
+    container_name: es-example
+    environment:
+      - cluster.name=mytestes # ES 集群的名称
+      - node.name=es-simple   # 节点名称
+      - bootstrap.memory_lock=true
+      - network.publish_host=elasticsearch  # 节点发布的网络名称
+      - discovery.seed_hosts=es-simple      # 设置集群中的主机地址
+      - cluster.initial_master_nodes=es-simple  # 手动设置可以成为 master 的节点集合
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./es/data:/usr/share/elasticsearch/data
+      - ./es/plugins:/usr/share/elasticsearch/plugins 
+    ports:
+      - 9200:9200
+    networks:
+      - mynetwork
+
+volumes:
+  esdata1:
+    driver: local
+
+networks:
+  mynetwork:
+    driver: bridge
